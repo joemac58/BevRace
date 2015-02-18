@@ -6,9 +6,12 @@ public class playerController : MonoBehaviour
     public float xSpeed = 0.0f;         // x speed
     public float tilt = 0.0f;           // tilt speed
     public float xMin, xMax;            // x movement range
-
+	
     private float xInput = 0.0f;        // x input
     private float xMove = 0.0f;         // x movement (input * speed)
+
+	public bool isGrounded = true;
+
 
     // Update is called once per frame
     void Update()
@@ -16,7 +19,10 @@ public class playerController : MonoBehaviour
         // use our input's horizontal controls (keys a & d || left & right)
         xInput = Input.GetAxis("Horizontal");
         xMove = xInput * xSpeed;
+
+
     }
+	
 
     // FixedUpdate is a physics update and used when working with rigibodys
     void FixedUpdate()
@@ -24,7 +30,7 @@ public class playerController : MonoBehaviour
         // apply input's x movement to rigidbody velocity to move player
         rigidbody.velocity = new Vector3(xMove, 0.0f, 0.0f);
 
-        // multiply our x velocity by our public tilt variable
+		// multiply our x velocity by our public tilt variable
         // we also reverse the value by multiplying against a negative
         // apply this value to our z rotation to create a tilting effect
         float playerTilt = rigidbody.velocity.x * tilt;
@@ -37,12 +43,22 @@ public class playerController : MonoBehaviour
             rigidbody.position.y,
             0.0f
         );
+
+		//jump control
+		if (Input.GetButtonDown("Jump")) {
+			Debug.Log("you clicked jump");
+			rigidbody.AddForce(new Vector3(0, 100 * rigidbody.mass, 0), ForceMode.Impulse);
+			isGrounded = false;
+			}
     }
 
     // when an object enters player trigger collider
     void OnTriggerEnter(Collider collisions)
     {
+
         // this tells us what hit our player
         Debug.Log("Player hit by: " + collisions.gameObject.tag);
+		//destroys the player
+		Destroy (gameObject);
     }
 }
