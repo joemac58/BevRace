@@ -20,7 +20,7 @@ public class dangerController : MonoBehaviour
 		//determine if the enemy needs to speed up or slow down
 		speed = Input.GetAxis ("Vertical");
 
-		while (speed > 0)			//plus sign is being pressed				
+		if(speed > 0)			//plus sign is being pressed				
 			speedUp ();
 		if (speed < 0) 			//minus sign is being pressed
 			slowDown ();
