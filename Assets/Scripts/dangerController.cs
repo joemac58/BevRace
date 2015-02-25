@@ -20,23 +20,17 @@ public class dangerController : MonoBehaviour
 		//determine if the enemy needs to speed up or slow down
 		speed = Input.GetAxis ("Vertical");
 
-		if(speed > 0)			//plus sign is being pressed				
-			speedUp ();
-		if (speed < 0) 			//minus sign is being pressed
-			slowDown ();
-
     }
 	
 	//speed up the enemy
 	void speedUp(){
-		zMove -= 95;
+		zMove -= 5;
 		Debug.Log("speedUp function called");
 		}
 
 	//slow down the enemy
 	void slowDown(){
-		zMove += 25;
-		//isDrinking = true;
+		zMove += 5;
 		Debug.Log("slowDown function called");
 		}
 
@@ -47,7 +41,12 @@ public class dangerController : MonoBehaviour
         // apply a constant value to z velocity to
         // move towards or away from player
         rigidbody.velocity = new Vector3(0.0f, 0.0f, zMove);
-
+		/*
+		if(speed > 0)			//plus sign is being pressed				
+			speedUp ();
+		if(speed < 0) 			//minus sign is being pressed
+			slowDown ();
+		*/
         // if our object's length is past our camera, then...
         if (rigidbody.position.z < -length)
         {

@@ -20,7 +20,6 @@ public class playerController : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         xMove = xInput * xSpeed;
 
-
     }
 	
 
@@ -36,20 +35,24 @@ public class playerController : MonoBehaviour
         float playerTilt = rigidbody.velocity.x * tilt;
         rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, playerTilt);
 
-        // clamp player position to be inside game bounds
-        rigidbody.position = new Vector3
-        (
-            Mathf.Clamp(rigidbody.position.x, xMin, xMax),
-            rigidbody.position.y,
-            0.0f
-        );
 
-		//jump control
-		if (Input.GetButtonDown("Jump")) {
-			Debug.Log("you clicked jump");
-			rigidbody.AddForce(new Vector3(0, 100 * rigidbody.mass, 0), ForceMode.Impulse);
-			isGrounded = false;
+        // clamp player position to be inside game bounds
+        rigidbody.position = new Vector3(Mathf.Clamp(rigidbody.position.x, xMin, xMax),rigidbody.position.y,0.0f);
+
+		if (Input.GetButtonDown ("Jump")) 
+			{
+				Debug.Log("you clicked jump");
+				isGrounded = false;
 			}
+
+		if(isGrounded == false)
+			{
+				Debug.Log("isGrounded = false");
+				rigidbody.AddForce(new Vector3(0, 100 * rigidbody.mass, 0), ForceMode.Impulse);
+				isGrounded = true;
+			}
+				
+			
     }
 
     // when an object enters player trigger collider
